@@ -1,0 +1,19 @@
+# Python
+__pycache__/
+*.pyc
+.env
+
+# Node
+node_modules/
+dist/
+.vite/
+tsconfig.tsbuildinfo
+
+# Gerados
+model_final.xml
+output/
+*.7z
+
+# IDEs
+.vscode/
+.idea/

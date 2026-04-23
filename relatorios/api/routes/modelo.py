@@ -27,8 +27,7 @@ Gera o **model.xml** usando o arquivo base configurado no servidor via `MODEL_BA
 async def gerar(configuracao: ConfiguracaoEvento):
     model_base_path = os.getenv(
         "MODEL_BASE_PATH",
-        str(Path(__file__).parent.parent.parent / "relatorios" /
-            "CPqD_Antifraude_Relatorios_Usuario" / "model.xml")
+        str(Path(__file__).parent.parent.parent / "CPqD_Antifraude_Relatorios_Usuario" / "model.xml")
     )
     if not Path(model_base_path).exists():
         raise HTTPException(status_code=400, detail=f"model.xml base não encontrado em: {model_base_path}")

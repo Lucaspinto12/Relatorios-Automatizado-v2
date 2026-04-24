@@ -1,9 +1,9 @@
+version: "3.8"
+
 services:
 
   api:
-    build:
-      context: .                  # raiz de relatorios/ — acessa api/ e CPqD_*/
-      dockerfile: api/Dockerfile
+    image: cognos-api:latest
     container_name: cognos-api
     restart: unless-stopped
     environment:
@@ -18,20 +18,26 @@ services:
       - ALLOWED_ORIGINS=http://localhost,http://localhost:80
     networks:
       - cognos-net
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
 
   frontend:
-    build:
-      context: ../frontend         # pasta frontend/ na raiz do workspace
-      dockerfile: Dockerfile
+    image: cognos-frontend:latest
     container_name: cognos-frontend
     restart: unless-stopped
     ports:
-      - "80:80"                    # acesso via http://IP_DA_MAQUINA
+      - "80:80"
     depends_on:
       - api
     networks:
       - cognos-net
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
 
 networks:
   cognos-net:
-    driver: bridge
+    driver: overlay

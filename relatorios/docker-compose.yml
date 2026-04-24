@@ -28,7 +28,7 @@ services:
     container_name: cognos-frontend
     restart: unless-stopped
     ports:
-      - "8080:80"
+      - "7878:80"
     depends_on:
       - api
     networks:

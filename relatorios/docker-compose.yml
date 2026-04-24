@@ -1,0 +1,37 @@
+services:
+
+  api:
+    build:
+      context: .                  # raiz de relatorios/ — acessa api/ e CPqD_*/
+      dockerfile: api/Dockerfile
+    container_name: cognos-api
+    restart: unless-stopped
+    environment:
+      - COGNOS_USER=${COGNOS_USER}
+      - COGNOS_PASS=${COGNOS_PASS}
+      - COGNOS_DSN=${COGNOS_DSN}
+      - COGNOS_NOME_VIEW=${COGNOS_NOME_VIEW}
+      - COGNOS_NOME_COGNOS=${COGNOS_NOME_COGNOS}
+      - COGNOS_NOME_NEGOCIO=${COGNOS_NOME_NEGOCIO}
+      - COGNOS_DATA_SOURCE=${COGNOS_DATA_SOURCE}
+      - COGNOS_VL_EVENT_CAMPO=${COGNOS_VL_EVENT_CAMPO}
+      - ALLOWED_ORIGINS=http://localhost,http://localhost:80
+    networks:
+      - cognos-net
+
+  frontend:
+    build:
+      context: ../frontend         # pasta frontend/ na raiz do workspace
+      dockerfile: Dockerfile
+    container_name: cognos-frontend
+    restart: unless-stopped
+    ports:
+      - "80:80"                    # acesso via http://IP_DA_MAQUINA
+    depends_on:
+      - api
+    networks:
+      - cognos-net
+
+networks:
+  cognos-net:
+    driver: bridge

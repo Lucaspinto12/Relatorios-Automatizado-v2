@@ -10,9 +10,13 @@ import shutil
 import xml.etree.ElementTree as ET
 from pathlib import Path
 
-# Adiciona o path da automação para importar os módulos
-# api/ está em relatorios/api/, então sobe 2 níveis para chegar em relatorios/
-AUTOMACAO_PATH = Path(__file__).parent.parent.parent / "CPqD_Antifraude_Relatorios_Usuario"
+# Path da automação — dentro do container está em /automacao,
+# fora (desenvolvimento local) sobe 2 níveis até CPqD_Antifraude_Relatorios_Usuario
+import os
+if os.path.isdir("/automacao"):
+    AUTOMACAO_PATH = Path("/automacao")
+else:
+    AUTOMACAO_PATH = Path(__file__).parent.parent.parent / "CPqD_Antifraude_Relatorios_Usuario"
 sys.path.insert(0, str(AUTOMACAO_PATH))
 
 
